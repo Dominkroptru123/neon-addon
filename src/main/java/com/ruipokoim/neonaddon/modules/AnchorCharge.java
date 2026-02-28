@@ -52,11 +52,6 @@ public class AnchorCharge extends Module{
                 }
                 else if(charges > 0){
                     SwitchAnchor();
-//                    if(safeAnchor.get()){
-//                        Sneak();
-//                        UseAnchor(hitResult);
-//                        SneakRelease();
-//                    }
                     if(BreakAfterCharge.get()){
                         UseAnchor(hitResult);
                     }

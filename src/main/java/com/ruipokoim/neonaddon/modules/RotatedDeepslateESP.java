@@ -90,7 +90,7 @@ public class RotatedDeepslateESP extends Module{
         BlockState state = event.newState;
         if(IsRotated(state, pos.getY())){
             FlaggedBlocks.add(pos);
-            info("Flagged rotated deepslate at " + pos);
+            info("Flagged rotated deepslate at x=" + pos.getX() + ", y=" + pos.getY() + ", z=" + pos.getZ());
         }
         else{
             FlaggedBlocks.remove(pos);

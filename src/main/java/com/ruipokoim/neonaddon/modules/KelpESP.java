@@ -23,6 +23,11 @@ import java.util.Set;
 
 public class KelpESP extends Module{
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+    private final Setting<Boolean> notifications = sgGeneral.add(new BoolSetting.Builder()
+            .name("notifications")
+            .description("Chat feedback")
+            .defaultValue(true)
+            .build());
     private final Setting<ShapeMode> KelpShapeMode = sgGeneral.add(new EnumSetting.Builder<ShapeMode>()
         .name("shape-mode")
         .description("How chunks render")
@@ -91,7 +96,9 @@ public class KelpESP extends Module{
         }
         if(KelpCol >= 10 && ((double) KelpsTopped / KelpCol) >= 0.6){
             FlaggedChunks.add(ChunkPos);
-            info("§bChunk " + ChunkPos + " §bflagged with " +  KelpsTopped + " / " + KelpCol + " §bcolumns");
+            if(notifications.get()){
+                info("§bChunk " + ChunkPos + " §bflagged with " +  KelpsTopped + " / " + KelpCol + " §bcolumns");
+            }
         }
     }
     @EventHandler

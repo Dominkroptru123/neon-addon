@@ -22,7 +22,7 @@ public class NeonMain extends MeteorAddon {
 		Modules.get().add(new AnchorCharge());
 		Modules.get().add(new KelpESP());
 		Modules.get().add(new RotatedDeepslateESP());
-		//Modules.get().add(new AutoPlaceCrystal());
+		Modules.get().add(new AntiTrap());
 		MeteorClient.EVENT_BUS.subscribe(this);
 	}
 	@Override
