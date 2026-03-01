@@ -2,15 +2,8 @@ package com.ruipokoim.neonaddon;
 
 import com.ruipokoim.neonaddon.modules.*;
 import meteordevelopment.meteorclient.addons.MeteorAddon;
-import meteordevelopment.meteorclient.gui.GuiThemes;
 import meteordevelopment.meteorclient.systems.modules.Modules;
 import meteordevelopment.meteorclient.systems.modules.Category;
-import meteordevelopment.orbit.EventHandler;
-
-import static meteordevelopment.meteorclient.MeteorClient.mc;
-
-import meteordevelopment.meteorclient.events.game.GameJoinedEvent;
-import meteordevelopment.meteorclient.events.game.GameLeftEvent;
 import meteordevelopment.meteorclient.MeteorClient;
 
 public class NeonMain extends MeteorAddon {
@@ -23,6 +16,7 @@ public class NeonMain extends MeteorAddon {
 		Modules.get().add(new KelpESP());
 		Modules.get().add(new RotatedDeepslateESP());
 		Modules.get().add(new AntiTrap());
+		Modules.get().add(new HoverTotem());
 		MeteorClient.EVENT_BUS.subscribe(this);
 	}
 	@Override

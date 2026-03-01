@@ -29,7 +29,7 @@ public class AutoBreakCrystal extends Module{
             .build()
     );
     public AutoBreakCrystal() {
-        super(NeonMain.CATEGORY, "auto-break-crystal", "Automatically breaks end crystals where you are pointing at.");
+        super(NeonMain.CATEGORY, "auto-break-crystal", "Automatically breaks end crystals where you are pointing at");
     }
     @EventHandler
     private void onTick(TickEvent.Pre event){

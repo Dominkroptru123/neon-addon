@@ -29,7 +29,6 @@ import static meteordevelopment.meteorclient.MeteorClient.mc;
 
 public class AnchorCharge extends Module{
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    public boolean isSneak = false;
     private final Setting<Boolean> BreakAfterCharge = sgGeneral.add(new BoolSetting.Builder()
             .name("break-after-charge")
             .description("Self-explain")
@@ -49,7 +48,7 @@ public class AnchorCharge extends Module{
             .build()
     );
     public AnchorCharge(){
-        super(NeonMain.CATEGORY, "auto-charge-anchor", "Self-explain.");
+        super(NeonMain.CATEGORY, "auto-charge-anchor", "Self-explain");
     }
     @EventHandler
     private void onTick(TickEvent.Pre event){

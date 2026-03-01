@@ -3,7 +3,7 @@
   "package": "com.ruipokoim.neonaddon.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "ExampleMixin"
+    "HandledScreenAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
