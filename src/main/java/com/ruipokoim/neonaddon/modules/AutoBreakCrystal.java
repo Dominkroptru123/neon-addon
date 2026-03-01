@@ -1,5 +1,7 @@
 package com.ruipokoim.neonaddon.modules;
 
+import com.ruipokoim.neonaddon.InteractionManager;
+import com.ruipokoim.neonaddon.InvManager;
 import com.ruipokoim.neonaddon.NeonMain;
 import meteordevelopment.meteorclient.events.world.TickEvent;
 import meteordevelopment.meteorclient.settings.*;
@@ -32,33 +34,20 @@ public class AutoBreakCrystal extends Module{
     @EventHandler
     private void onTick(TickEvent.Pre event){
         if(mc.player == null || mc.world == null) return;
-        if(OnlyWhenHoldingCrystal.get() && !IsHoldingCrystal()) return;
+        if(OnlyWhenHoldingCrystal.get() && !InvManager.IsHolding(Items.END_CRYSTAL)) return;
         HitResult HitResult = mc.crosshairTarget;
         if(HitResult instanceof EntityHitResult entityHit){
             if(entityHit.getEntity() instanceof EndCrystalEntity crystal){
                 if(SafeCrystal.get()){
                     int PlayerY = (int) Math.floor(mc.player.getY());
                     if(crystal.getBlockPos().getY() >= (int)Math.floor(mc.player.getY()) + 1){
-                        AttackCrystal(crystal);
+                        InteractionManager.Attack(crystal);
                     }
                 }
                 else{
-                    AttackCrystal(crystal);
+                    InteractionManager.Attack(crystal);
                 }
             }
         }
-    }
-    private void AttackCrystal(EndCrystalEntity crystal) {
-        if (crystal == null || crystal.isRemoved()) return;
-        try {
-            mc.interactionManager.attackEntity(mc.player, crystal);
-            mc.player.swingHand(Hand.MAIN_HAND);
-        } catch (Exception e) {
-            //error("Failed to attack crystal: " + e.getMessage());
-        }
-    }
-    private boolean IsHoldingCrystal(){
-        if(mc.player == null) return false;
-        return mc.player.getMainHandStack().getItem() == Items.END_CRYSTAL || mc.player.getOffHandStack().getItem() == Items.END_CRYSTAL;
     }
 }
