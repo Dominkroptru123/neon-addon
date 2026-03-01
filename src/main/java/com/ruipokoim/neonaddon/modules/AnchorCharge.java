@@ -58,23 +58,23 @@ public class AnchorCharge extends Module{
             BlockState state = mc.world.getBlockState(hitResult.getBlockPos());
             if(state.getBlock() == Blocks.RESPAWN_ANCHOR){
                 int charges = state.get(RespawnAnchorBlock.CHARGES);
-                if(charges == 0){
+                if(charges == 0 && InvManager.HotbarHas(Items.GLOWSTONE)){
                     InvManager.HotbarSwitch(Items.GLOWSTONE);
                     InteractionManager.Interact(hitResult);
                 }
                 else if(charges > 0){
-                    if(OnlyWhenHoldingTotem.get() && InvManager.IsOffHolding(Items.TOTEM_OF_UNDYING)){
+                    if(OnlyWhenHoldingTotem.get() && InvManager.IsOffHolding(Items.TOTEM_OF_UNDYING) && InvManager.HotbarHas(Items.RESPAWN_ANCHOR)){
                         InvManager.HotbarSwitch(Items.RESPAWN_ANCHOR);
                         if(BreakAfterCharge.get()){
                             InteractionManager.Interact(hitResult);
                         }
                     }
                     else if(safeAnchor.get()){
-                        if(IsGlowstoneCloser(hitResult.getBlockPos())){
+                        if(IsGlowstoneCloser(hitResult.getBlockPos()) && InvManager.HotbarHas(Items.RESPAWN_ANCHOR)){
                             InvManager.HotbarSwitch(Items.RESPAWN_ANCHOR);
                             InteractionManager.Interact(hitResult);
                         }
-                        else{
+                        else if(InvManager.HotbarHas(Items.GLOWSTONE)){
                             InvManager.HotbarSwitch(Items.GLOWSTONE);
                             Sneak(true);
                             InteractionManager.Place();

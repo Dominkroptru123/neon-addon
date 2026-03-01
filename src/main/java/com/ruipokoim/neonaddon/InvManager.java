@@ -15,7 +15,6 @@ public class InvManager{
         return list;
     }
     public static void HotbarSwitch(Item item) {
-        if (mc.player == null) return;
         for (int i = 0; i < 9; i++) {
             ItemStack stack = mc.player.getInventory().getStack(i);
             if (stack.getItem() == item) {
@@ -23,6 +22,15 @@ public class InvManager{
                 break;
             }
         }
+    }
+    public static boolean HotbarHas(Item item) {
+        for (int i = 0; i < 9; i++) {
+            ItemStack stack = mc.player.getInventory().getStack(i);
+            if (stack.getItem() == item) {
+                return true;
+            }
+        }
+        return false;
     }
     public static boolean IsHolding(Item item){
         return mc.player.getMainHandStack().getItem() == item;
