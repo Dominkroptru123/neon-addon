@@ -24,6 +24,7 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import com.ruipokoim.neonaddon.InvManager;
+import net.minecraft.world.World;
 
 import static meteordevelopment.meteorclient.MeteorClient.mc;
 
@@ -52,7 +53,7 @@ public class AnchorCharge extends Module{
     }
     @EventHandler
     private void onTick(TickEvent.Pre event){
-        if(mc.player == null || mc.world == null) return;
+        if(mc.player == null || mc.world == null || mc.world.getRegistryKey() == World.NETHER) return;
         if(mc.crosshairTarget instanceof BlockHitResult hitResult){
             BlockState state = mc.world.getBlockState(hitResult.getBlockPos());
             if(state.getBlock() == Blocks.RESPAWN_ANCHOR){
