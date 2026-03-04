@@ -35,7 +35,7 @@ public class HoverTotem extends Module {
     private void onTick(TickEvent.Pre event){
         if(mc.player == null || mc.world == null) return;
         if(mc.currentScreen instanceof InventoryScreen inventoryScreen){
-            Slot hoveredSlot = ((HandledScreenAccessor) inventoryScreen).getFocusedSlot();
+            Slot hoveredSlot = ((HandledScreenAccessor) inventoryScreen).neon$getFocusedSlot();
             if (hoveredSlot != null && hoveredSlot.hasStack()) {
                 int slotIndex = hoveredSlot.getIndex();
                 if(slotIndex <= 35 && hoveredSlot.getStack().isOf(Items.TOTEM_OF_UNDYING)){
