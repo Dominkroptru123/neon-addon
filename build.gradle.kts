@@ -7,7 +7,12 @@ base {
     version = libs.versions.mod.version.get()
     group = properties["maven_group"] as String
 }
-
+loom {
+    mixin {
+        defaultRefmapName.set("neonaddon-refmap.json")
+        useLegacyMixinAp = true
+    }
+}
 repositories {
     maven {
         name = "meteor-maven"
