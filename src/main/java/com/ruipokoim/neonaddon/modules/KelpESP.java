@@ -70,14 +70,13 @@ public class KelpESP extends Module{
         int x1 = ChunkPos.getStartX();
         int z1 = ChunkPos.getStartZ();
         int y1 = chunk.getBottomY();
-        int y2 = y1 + chunk.getHeight();
         int KelpCol = 0;
         int KelpsTopped = 0;
         for(int x = x1;x < x1 + 16;++x){
             for(int z = z1;z < z1 + 16;++z){
                 int top = 0;
                 int bottom = -320;
-                for(int y = y1;y < y2;++y){
+                for(int y = y1;y < mc.world.getSeaLevel();++y){
                     Block block = chunk.getBlockState(new BlockPos(x, y, z)).getBlock();
                     if(block instanceof KelpBlock || block instanceof KelpPlantBlock){
                         if(bottom < 0){

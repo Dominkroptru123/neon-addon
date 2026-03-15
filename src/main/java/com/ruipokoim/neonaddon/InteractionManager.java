@@ -18,13 +18,7 @@ import static meteordevelopment.meteorclient.utils.render.RenderUtils.center;
 
 public class InteractionManager{
     public static void Interact(BlockHitResult HitResult){
-        BlockUtils.interact(HitResult, Hand.MAIN_HAND, false);
-    }
-    public static void Place(){
-        if (mc.crosshairTarget != null && mc.crosshairTarget.getType() == HitResult.Type.BLOCK) {
-            BlockPos pos = ((BlockHitResult)mc.crosshairTarget).getBlockPos().offset(((BlockHitResult)mc.crosshairTarget).getSide());
-            BlockUtils.place(pos, Hand.MAIN_HAND, mc.player.getInventory().getSelectedSlot(), false, 2147483647, false, true, false);
-        }
+        BlockUtils.interact(HitResult, Hand.MAIN_HAND, true);
     }
     public static void Attack(Entity target) {
         mc.interactionManager.attackEntity(mc.player, target);

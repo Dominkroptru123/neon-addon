@@ -22,18 +22,18 @@ import net.minecraft.world.chunk.WorldChunk;
 import java.util.HashSet;
 import java.util.Set;
 
-public class RotatedDeepslateESP extends Module{
+public class DeepslateESP extends Module{
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final Setting<ShapeMode> DeepslateShapeMode = sgGeneral.add(new EnumSetting.Builder<ShapeMode>()
-        .name("shape-mode")
-        .description("How deepslates render")
-        .defaultValue(ShapeMode.Both)
-        .build());
+            .name("shape-mode")
+            .description("How deepslates render")
+            .defaultValue(ShapeMode.Both)
+            .build());
     private final Setting<Boolean> Tracers = sgGeneral.add(new BoolSetting.Builder()
-        .name("tracers")
-        .description("Draws tracers to deepslate blocks")
-        .defaultValue(true)
-        .build()
+            .name("tracers")
+            .description("Draws tracers to deepslate blocks")
+            .defaultValue(true)
+            .build()
     );
     private final Setting<SettingColor> TracersColor = sgGeneral.add(new ColorSetting.Builder()
             .name("tracers-color")
@@ -47,24 +47,8 @@ public class RotatedDeepslateESP extends Module{
             .defaultValue(new SettingColor(0, 255, 0, 100))
             .build());
     private final SettingGroup Range = settings.createGroup("Range");
-    private final Setting<Integer> min = Range.add(new IntSetting.Builder()
-            .name("min-y")
-            .description("Minimum Y level to scan")
-            .defaultValue(-64)
-            .min(-64)
-            .max(128)
-            .sliderRange(-64, 128)
-            .build());
-    private final Setting<Integer> max = Range.add(new IntSetting.Builder()
-            .name("max-y")
-            .description("Maximum Y level to scan")
-            .defaultValue(128)
-            .min(128)
-            .max(320)
-            .sliderRange(-64, 320)
-            .build());
-    public RotatedDeepslateESP() {
-        super(NeonMain.CATEGORY, "RotatedDeepslateESP", "Flags deepslates that has been rotated");
+    public DeepslateESP() {
+        super(NeonMain.CATEGORY, "DeepslateESP", "Flags deepslates that has Y level higher than 8");
     }
     private Set<BlockPos> FlaggedBlocks = new HashSet<>();
     @Override
@@ -88,9 +72,9 @@ public class RotatedDeepslateESP extends Module{
     @EventHandler
     private void onBlockUpdate(BlockUpdateEvent event){
         BlockPos pos = event.pos;
-        if(IsRotated(event.newState, pos.getY())){
+        if(event.newState.isOf(Blocks.DEEPSLATE) && pos.getY() > 8){
             FlaggedBlocks.add(pos);
-            info("Flagged rotated deepslate at x=" + pos.getX() + ", y=" + pos.getY() + ", z=" + pos.getZ());
+            info("Flagged deepslate at x=" + pos.getX() + ", y=" + pos.getY() + ", z=" + pos.getZ());
         }
         else{
             FlaggedBlocks.remove(pos);
@@ -100,27 +84,16 @@ public class RotatedDeepslateESP extends Module{
         ChunkPos chunkPos = chunk.getPos();
         int x1 = chunkPos.getStartX();
         int z1 = chunkPos.getStartZ();
-        int y1 = Math.max(chunk.getBottomY(), min.get());
-        int y2 = Math.min(chunk.getBottomY() + chunk.getHeight(), max.get());
         for(int x = x1;x < x1 + 16;++x){
             for(int z = z1;z < z1 + 16;++z){
-                for(int y = y1;y < y2;++y){
-                    if(IsRotated(chunk.getBlockState(new BlockPos(x, y, z)), y)){
+                for(int y = 9;y < chunk.getBottomY() + chunk.getHeight();++y){
+                    if(chunk.getBlockState(new BlockPos(x, y, z)).isOf(Blocks.DEEPSLATE)){
                         FlaggedBlocks.add(new BlockPos(x, y, z));
-                        info("Flagged rotated deepslate at x=" + x + ", y=" + y + ", z=" + z);
+                        info("Flagged deepslate at x=" + x + ", y=" + y + ", z=" + z);
                     }
                 }
             }
         }
-    }
-    private boolean IsRotated(BlockState state, int y){
-        if(y < min.get() || y > max.get()) return false;
-        if(!state.contains(Properties.AXIS)) return false;
-        if(state.get(Properties.AXIS) == Direction.Axis.Y) return false;
-        if(state.isOf(Blocks.DEEPSLATE) || state.isOf(Blocks.DEEPSLATE_BRICKS) || state.isOf(Blocks.CHISELED_DEEPSLATE) || state.isOf(Blocks.POLISHED_DEEPSLATE) || state.isOf(Blocks.DEEPSLATE_TILES)){
-            return true;
-        }
-        return false;
     }
     @EventHandler
     private void onRender(Render3DEvent event){
